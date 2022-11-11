@@ -5,9 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class VehicleSignal {
+public class Coordinate {
     @NotNull
-    private Coordinate current;
+    private float latitude;
     @NotNull
-    private Coordinate destination;
+    private float longitude;
 }

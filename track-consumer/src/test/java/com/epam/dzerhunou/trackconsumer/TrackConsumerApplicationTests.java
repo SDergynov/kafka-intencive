@@ -1,10 +1,10 @@
-package com.epam.dzerhunou.restservice;
+package com.epam.dzerhunou.trackconsumer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RestServiceApplicationTests {
+class TrackConsumerApplicationTests {
 
     @Test
     void contextLoads() {
