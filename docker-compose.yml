@@ -8,6 +8,8 @@ services:
     ports:
       - "8080:8080"
     restart: unless-stopped
+    networks:
+      - taxi
 
   zoo1:
     image: confluentinc/cp-zookeeper:7.3.0
@@ -19,6 +21,8 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_SERVERS: zoo1:2888:3888
+    networks:
+      - taxi
 
   kafka1:
     image: confluentinc/cp-kafka:7.3.0
@@ -38,6 +42,8 @@ services:
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
       - zoo1
+    networks:
+      - taxi
 
   kafka2:
     image: confluentinc/cp-kafka:7.3.0
@@ -57,6 +63,8 @@ services:
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
       - zoo1
+    networks:
+      - taxi
 
 
   kafka3:
@@ -77,6 +85,12 @@ services:
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
       - zoo1
+    networks:
+      - taxi
 
 volumes:
   rest-service:
+
+networks:
+  taxi:
+    driver: bridge
