@@ -26,4 +26,19 @@ public class VehicleController {
         Vehicle vehicle = vehicleService.createSignal(id);
         return new ResponseEntity<>(vehicle, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Vehicle> getVehicleS(
+            @PathVariable Long id
+    ) {
+        log.info("Get vehicle with id: {}",id);
+        return new ResponseEntity<>(new Vehicle(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<String> getTest(
+    ) {
+        log.info("Test passed");
+        return new ResponseEntity<>("Test passed", HttpStatus.OK);
+    }
 }

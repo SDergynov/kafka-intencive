@@ -11,8 +11,8 @@
     <groupId>com.epam.dzerhunou</groupId>
     <artifactId>kafka-intencive</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>kafka-intencive</name>
-    <description>kafka-intencive</description>
+    <name>kafka-intensive</name>
+    <description>kafka-intensive</description>
     <properties>
         <java.version>11</java.version>
     </properties>
