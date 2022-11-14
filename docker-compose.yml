@@ -3,15 +3,65 @@ version: "3.9"
 services:
   rest-service:
     container_name: service
+    hostname: rest
     build:
       dockerfile: rest-service/Dockerfile
     ports:
       - "8080:8080"
+    links:
+      - eureka
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka1:19092
+      EUREKA_URI: http://eureka:8761/eureka
     restart: unless-stopped
     depends_on:
       - kafka1
+      - eureka
+    networks:
+      - taxi
+
+  track-consumer1:
+    container_name: track-consumer1
+    hostname: consumer1
+    build:
+      dockerfile: track-consumer/Dockerfile
+    links:
+      - eureka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka1:19092
+      EUREKA_URI: http://eureka:8761/eureka
+    restart: unless-stopped
+    depends_on:
+      - kafka1
+      - eureka
+    networks:
+      - taxi
+
+  logging-consumer:
+    container_name: logging-consumer
+    hostname: logging
+    build:
+      dockerfile: logging-consumer/Dockerfile
+    links:
+      - eureka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka1:19092
+      EUREKA_URI: http://eureka:8761/eureka
+    restart: unless-stopped
+    depends_on:
+      - kafka1
+      - eureka
+    networks:
+      - taxi
+
+  eureka:
+    container_name: eureka
+    hostname: eureka
+    build:
+      dockerfile: eureka/Dockerfile
+    ports:
+      - "8761:8761"
+    restart: unless-stopped
     networks:
       - taxi
 

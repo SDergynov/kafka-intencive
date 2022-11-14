@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class Coordinate {
     @NotNull
-    private float latitude;
+    private double latitude;
     @NotNull
-    private float longitude;
+    private double longitude;
 }
