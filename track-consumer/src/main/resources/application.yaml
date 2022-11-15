@@ -1,0 +1,32 @@
+application:
+  vehicle-distance-topic: "output_topic"
+  vehicle-signal-topic: "input_topic"
+  track-consumer-group: "track_consumer"
+
+spring:
+  application:
+    name: track-consumer
+  kafka:
+    bootstrap-servers:
+      ${SPRING_KAFKA_BOOTSTRAP_SERVERS:http://localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+
+eureka:
+  client:
+    service-url:
+      defaultZone:
+        ${EUREKA_URI:http://localhost:8761/eureka}
+
+server:
+  port: 8082
