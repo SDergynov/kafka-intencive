@@ -12,7 +12,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic inputTopic() {
-        return TopicBuilder.name("input_topic")
+        return TopicBuilder.name("${application.vehicle-signal-topic}")
                 .partitions(3)
                 .replicas(2)
                 .build();
@@ -20,7 +20,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic outputTopic(){
-        return TopicBuilder.name("output_topic")
+        return TopicBuilder.name("${application.vehicle-distance-topic}")
                 .partitions(3)
                 .replicas(2)
                 .build();

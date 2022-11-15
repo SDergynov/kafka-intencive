@@ -4,27 +4,26 @@ import com.epam.dzerhunou.trackconsumer.model.Coordinate;
 import com.epam.dzerhunou.trackconsumer.model.VehicleSignal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class TrackConsumer {
 
-    @Autowired
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    private final DistanceProducer distanceProducer;
 
     @KafkaListener(
-            groupId = "track_consumer",
-            topics = "input_topic")
+            groupId = "${application.track-consumer-group}",
+            topics = "${application.vehicle-signal-topic}")
     public void consume(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
         VehicleSignal vehicleSignal = new ObjectMapper().readValue(consumerRecord.value(), VehicleSignal.class);
-        kafkaTemplate.send("output_topic", consumerRecord.key(), getDistance(vehicleSignal));
-        log.info("current distance: {}", getDistance(vehicleSignal));
+        distanceProducer.sendDistance(consumerRecord.key(), getDistance(vehicleSignal));
+        log.info("Current distance: {}", getDistance(vehicleSignal));
     }
 
     private double getDistance(VehicleSignal vehicleSignal) {

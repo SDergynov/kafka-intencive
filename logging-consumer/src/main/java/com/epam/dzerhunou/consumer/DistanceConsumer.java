@@ -15,8 +15,8 @@ public class DistanceConsumer {
     private final Map<String, Double> distance = new HashMap<>();
 
     @KafkaListener(
-            groupId = "track_consumer",
-            topics = "output_topic")
+            groupId = "${application.distance-consumer-group}",
+            topics = "${application.vehicle-distance-topic}")
     public void consume(ConsumerRecord<String, String> consumerRecord) {
         log.info("Vehicle id: {} - Total distance: {}", consumerRecord.key(),
                 getTotalDistance(consumerRecord.key(), consumerRecord.value()));

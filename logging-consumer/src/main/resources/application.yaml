@@ -1,3 +1,7 @@
+application:
+  vehicle-distance-topic: "output_topic"
+  distance-consumer-group: "distance_consumer"
+
 spring:
   application:
     name: logging-consumer
