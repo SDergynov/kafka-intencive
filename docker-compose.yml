@@ -96,6 +96,17 @@ services:
     networks:
       - taxi
 
+#------------Kafprop---------------------
+  kafprop:
+    image: obsidiandynamics/kafdrop:latest
+    hostname: kafprop
+    container_name: kafprop
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka1:19092, kafka2:19093, kafka3:19093
+    networks:
+      - taxi
 #------------Zookeeper---------------------
   zoo1:
     image: confluentinc/cp-zookeeper:7.3.0
